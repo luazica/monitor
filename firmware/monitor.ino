@@ -19,13 +19,13 @@ void setup()
 
 void loop()
 {
-  humidity = readHumidity();
+  generateRandomHumidity(humidity);
   triggered = defineTriggered(humidity);
 
   controllLeds(triggered);
   //sendData(humidity, triggered);
 
-  delay(1000);
+  delay(10000);
 }
 
 // void sendData(int humidity, bool triggered)
@@ -55,13 +55,20 @@ void loop()
 //   }
 // }
 
+void generateRandomHumidity(int& humidity)
+{
+  humidity = random(0, 1024);
+  Serial.print(humidity);
+  Serial.print("\n");
+}
+
 void setupComponents()
 {
   pinMode(PIN_LED_GREEN, OUTPUT);
   pinMode(PIN_LED_RED, OUTPUT);
 }
 
-void controllLeds(bool triggered)
+void controllLeds(bool& triggered)
 {
   if(triggered){
     digitalWrite(PIN_LED_GREEN, HIGH);
@@ -77,7 +84,7 @@ void controllLeds(bool triggered)
 //   return analogRead(ANALOG_PIN);
 // }
 
-bool defineTriggered(int humidity)
+bool defineTriggered(int& humidity)
 {
-  return humidity > 100 && humidity < 500;
+  return humidity > 200 && humidity < 700;
 }
