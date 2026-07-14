@@ -1,7 +1,8 @@
 //#include <HTTPClient.h>
 //#include <Wifi.h>
-#define ANALOG_PIN A0
-#define PIN_LED 7
+//#define ANALOG_PIN A0
+#define PIN_LED_GREEN 7
+#define PIN_LED_RED 13
 
 int humidity = 0;
 bool triggered = false;
@@ -31,7 +32,7 @@ void loop()
 // {
 //   HTTPClient http;
 
-//   http.begin("http://10.110.220.122:8080/api/sensor");
+//   http.begin("http://192.168.0.6/24:8080/api/sensor");
 //   http.addHeader("Content-type", "application/json");
 
 //   String json = "{";
@@ -56,25 +57,27 @@ void loop()
 
 void setupComponents()
 {
-  pinMode(ANALOG_PIN, INPUT);
-  pinMode(PIN_LED, OUTPUT);
+  pinMode(PIN_LED_GREEN, OUTPUT);
+  pinMode(PIN_LED_RED, OUTPUT);
 }
 
 void controllLeds(bool triggered)
 {
   if(triggered){
-    digitalWrite(PIN_LED, HIGH);
+    digitalWrite(PIN_LED_GREEN, HIGH);
+    digitalWrite(PIN_LED_RED, LOW);
   } else {
-    digitalWrite(PIN_LED, LOW);
+    digitalWrite(PIN_LED_GREEN, LOW);
+    digitalWrite(PIN_LED_RED, HIGH);
   }
 }
 
-int readHumidity()
-{
-  return analogRead(ANALOG_PIN);
-}
+// int readHumidity()
+// {
+//   return analogRead(ANALOG_PIN);
+// }
 
 bool defineTriggered(int humidity)
 {
-  return humidity > 200;
+  return humidity > 100 && humidity < 500;
 }
