@@ -67,7 +67,8 @@ O protótipo contém:
 projeto/
 │
 ├── firmware/
-│   └── monitor.ino
+│   ├── esp8266.ino
+│   └── arduino.ino
 │
 ├── api/
 │   ├── main.go
