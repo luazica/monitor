@@ -1,0 +1,14 @@
+# Python virtual environments
+api/.venv/
+**/.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Go
+*.exe
+*.out
+
+# IDE
+.vscode/

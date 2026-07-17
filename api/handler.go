@@ -1,41 +1,49 @@
 package main
 
-import(
-  "fmt"
+import (
+	"encoding/json"
+	"fmt"
 	"net/http"
-  "encoding/json"
 )
 
 type SensorData struct {
-  Humidity int `json:"humidity"`
-  Triggered bool `json:"triggered"`
+	Humidity  int  `json:"humidity"`
+	Triggered bool `json:"triggered"`
 }
 
 var currentData SensorData
+
 func SensorHandler(w http.ResponseWriter, r *http.Request) {
-  w.Header().Set("Access-Control-Allow-Origin", "*")//C.O.R.S.
-  var data SensorData
+	w.Header().Set("Access-Control-Allow-Origin", "*") //C.O.R.S.
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
-  switch r.Method {
-    case http.MethodPost:
-      err := json.NewDecoder(r.Body).Decode(&data)
-        if err != nil {
-          fmt.Println("json invalido")
-          http.Error(w, "invalid JSON", http.StatusBadRequest)
-          return
-        }
-        currentData = data
+	var data SensorData
 
-        fmt.Println("umidade:", data.Humidity)
-        fmt.Println("critico:", data.Triggered)
-        w.Write([]byte("dados recebidos\n"))
+	switch r.Method {
+	case http.MethodPost:
+		err := json.NewDecoder(r.Body).Decode(&data)
+		if err != nil {
+			fmt.Println("invalid JSON")
+			http.Error(w, "invalid JSON", http.StatusBadRequest)
+			return
+		}
+		currentData = data
 
-    case http.MethodGet:
-      w.Header().Set("Content-Type", "application/json")
-      json.NewEncoder(w).Encode(currentData)
+		fmt.Println("humidity:", data.Humidity)
+		fmt.Println("triggered:", data.Triggered)
+		w.Write([]byte("data received\n"))
 
-    default:
-      fmt.Println("metodo invalido")
-      http.Error(w, "invalid method", http.StatusMethodNotAllowed)
-    }
+	case http.MethodGet:
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(currentData)
+
+	case http.MethodOptions:
+		w.WriteHeader(http.StatusNoContent) // ou http.StatusOK
+		return
+
+	default:
+		fmt.Println("invalid method")
+		http.Error(w, "invalid method", http.StatusMethodNotAllowed)
+	}
 }
