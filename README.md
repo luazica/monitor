@@ -62,7 +62,7 @@ O circuíto contém:
 
 ## Protótipo Físico
 
-![Protótipo Físico](images/protoype.jpeg)
+![Protótipo Físico](images/prototype.jpeg)
 
 O protótipo contém:
 
