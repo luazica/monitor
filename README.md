@@ -11,7 +11,7 @@ Desenvolver um sistema de monitoramento de umidade utilizando um Arduino para ge
 ### Hardware
 
 * Arduino Uno
-* ESP8266
+* ESP8266 *(projeto original)*
 * Sensor de Umidade *(projeto original)*
 * LEDs para indicação de status
 * Protoboard e jumpers
@@ -30,7 +30,7 @@ Desenvolver um sistema de monitoramento de umidade utilizando um Arduino para ge
 ```text
    Arduino
       │
-      │  HTTP
+      │  
       ▼
 Servidor em Go
       │
@@ -52,7 +52,7 @@ O circuito foi desenvolvido no Tinkercad para representar a proposta original do
 
 ![Circuito do projeto](images/tinkercad.png)
 
-O protótipo contém:
+O circuíto contém:
 
 * Arduino Uno
 * Sensor de umidade
@@ -60,6 +60,16 @@ O protótipo contém:
 
 > **Observação:** O circuito representa a ideia original do projeto. Durante o desenvolvimento não foi possível utilizar o sensor físico, portanto as leituras apresentadas pelo sistema foram simuladas por software no Arduino.
 
+## Protótipo Físico
+
+![Protótipo Físico](images/protoype.jpeg)
+
+O protótipo contém:
+
+* Arduino Uno
+* LEDs indicadores
+
+> **Observação:** Também durante o desenvolvimento, não foi possível utilizar o módulo de WIFI (ESP8266), portanto o "envio" de dados acontece por meio de um script em python que lê os dados mostrados no serial do arduíno e envia para a API. Para isso ser feito, o Arduíno precisa estar plugado na USB.
 
 ## Estrutura do Projeto
 
@@ -71,6 +81,8 @@ projeto/
 │   └── arduino.ino
 │
 ├── api/
+│   ├── gateway.py
+│   ├── init.sh
 │   ├── main.go
 │   └── handler.go
 │
@@ -102,7 +114,7 @@ POST /api/sensor
 
 ```json
 {
-    "umidade": 68,
+    "humidity": 68,
     "triggered": false
 }
 ```
@@ -111,7 +123,7 @@ POST /api/sensor
 
 | Campo       | Tipo     | Descrição                                                                                     |
 | ----------- | -------- | --------------------------------------------------------------------------------------------- |
-| `umidade`   | Número   | Valor da umidade medida (ou simulada).                                                        |
+| `humidity`  | Número   | Porcentagem da umidade medida (ou simulada).                                                  |
 | `triggered` | Booleano | Indica se a leitura ultrapassou os limites definidos e deve gerar um alerta na interface web. |
 
 
@@ -127,7 +139,7 @@ GET /api/sensor
 
 ```json
 {
-    "umidade": 68,
+    "humidity": 68,
     "triggered": false
 }
 ```
@@ -138,7 +150,7 @@ GET /api/sensor
 ### Backend
 
 ```bash
-go run main.go
+./init.sh
 ```
 
 ### Arduino
