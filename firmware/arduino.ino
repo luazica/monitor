@@ -2,8 +2,8 @@
 #define PIN_LED_GREEN 7
 #define PIN_LED_RED 13
 
-bool triggered = false;
-int humidity = 0;
+bool triggered;
+int humidity;
 
 void setup()
 {
@@ -16,21 +16,26 @@ void setup()
 void loop()
 {
   humidity = generateRandomHumidity();
-
   triggered = defineTriggered(humidity);
 
   controllLeds(triggered);
 
+  sendData();
+
+  delay(10000);
+}
+
+void sendData()
+{
   Serial.print("{\"humidity\":");
   Serial.print(humidity);
   Serial.print(",\"triggered\":");
   Serial.print(triggered ? "true" : "false");
   Serial.println("}");
-
-  delay(10000);
 }
 
-void controllLeds(bool triggered) { 
+void controllLeds(bool triggered) 
+{ 
   if(!triggered){ 
     digitalWrite(PIN_LED_GREEN, HIGH); 
     digitalWrite(PIN_LED_RED, LOW); } 

@@ -13,7 +13,6 @@ async function checkAPI() {
     console.log("error:", err);
   }
 }
-checkAPI();
 
 //function checkSensor(){
 //
@@ -31,34 +30,36 @@ async function getData() {
   }
 }
 
-const button = document.getElementById('button');
-button.addEventListener('click', async function () {
-  if (!triggered) {
-    triggered = true;
-  } else {
-    triggered = false;
-  }
+// const toggle_button = document.getElementById('toggle_button');
+// toggle_button.addEventListener('click', async function () {
+//   if (!triggered) {
+//     triggered = true;
+//   } else {
+//     triggered = false;
+//   }
 
-  const response = await fetch("http://localhost:8080/api/sensor");
-  const responseData = await response.json();
+//   const response = await fetch("http://localhost:8080/api/sensor");
+//   const responseData = await response.json();
 
-  const data = {
-    humidity: responseData.humidity,
-    triggered: (triggered) ? true : false
-  };
+//   const data = {
+//     humidity: responseData.humidity,
+//     triggered: (triggered) ? true : false,
+//   };
 
-  const sendData = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  };
+//   const sendData = {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(data)
+//   };
 
-  await fetch("http://localhost:8080/api/sensor", sendData)
-    .then(res => res.json())
-    .then(sended => {
-      console.log("sucess: ", sended)
-    })
-});
+//   await fetch("http://localhost:8080/api/sensor", sendData)
+//     .then(res => res.json())
+//     .then(sended => {
+//       console.log("sucess: ", sended)
+//     })
+// });
+
+checkAPI();
 setInterval(getData, 1000);

@@ -15,6 +15,5 @@ echo ""
 echo "all services started"
 echo "API PID: $API_PID"
 echo "Python PID: $PY_PID"
-echo "Frontend PID: $FRONT_PID"
 
 wait

@@ -39,7 +39,7 @@ func SensorHandler(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(currentData)
 
 	case http.MethodOptions:
-		w.WriteHeader(http.StatusNoContent) // ou http.StatusOK
+		w.WriteHeader(http.StatusNoContent)
 		return
 
 	default:

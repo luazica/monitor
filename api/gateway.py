@@ -2,7 +2,7 @@ import serial
 import requests
 import json
 
-arduino = serial.Serial('/dev/ttyACM0', 9600)
+arduino = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
 
 while True:
     line = arduino.readline().decode().strip()
