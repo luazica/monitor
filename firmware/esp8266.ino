@@ -1,21 +1,56 @@
 // #include <ESP8266WiFi.h>
 // #include <ESP8266HTTPClient.h>
+// #define PIN_LED_GREEN D1
+// #define PIN_LED_RED D2
 
-// const char* ssid = "";
-// const char* psswd = "";
+// const char* ssid = "brisa-4475197";
+// const char* psswd = "C9QXsAE3";
 // int humidity = 0;
 // bool triggered = false;
 
-// void setup() 
+// void setup()
 // {
-//   Serial.begin(115200);
+//   Serial.begin(9600);
 //   connection();
+//   pinMode(PIN_LED_GREEN, OUTPUT);
+//   pinMode(PIN_LED_RED, OUTPUT);
 // }
 
-// void loop() 
+// void loop()
 // {
-//   sendData(65, false); 
-//   delay(10000); 
+//   humidity = generateRandomHumidity();
+//   triggered = defineTriggered(humidity);
+
+//   controllLeds(triggered);
+
+//   sendData(humidity, triggered);
+
+//   delay(10000);
+// }
+
+// void controllLeds(bool triggered) 
+// { 
+//   if(!triggered){ 
+//     digitalWrite(PIN_LED_GREEN, HIGH); 
+//     digitalWrite(PIN_LED_RED, LOW); } 
+//   else { 
+//     digitalWrite(PIN_LED_GREEN, LOW); 
+//     digitalWrite(PIN_LED_RED, HIGH); 
+//   } 
+// }
+
+// int generateRandomHumidity()
+// {
+//   return random(0, 100);
+// }
+
+// bool defineTriggered(int humidity)
+// {
+//   if(humidity > 25 && humidity < 75){
+//     return false;
+//   } else {
+//     return true;
+//   }
 // }
 
 // void sendData(int humidity, bool triggered)
@@ -44,3 +79,4 @@
 //   Serial.println("connecting...");
 //   }
 // }
+
